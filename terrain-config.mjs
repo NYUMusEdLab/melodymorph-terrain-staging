@@ -1,14 +1,13 @@
-// Public deployment configuration only. Never put AWS keys or client secrets here.
+// Public configuration. Proposed activation; not deployed.
 export const terrainConfig = Object.freeze({
-  enabled: false,
-  guestEnabled: false,
-  activitySharingEnabled: false,
-  librarySharingEnabled: false,
-  apiBase: '',
-  issuer: '',
-  clientId: '',
-  authDomain: '',
-  scope: 'openid',
-  // Register this exact URL on a public Cognito OAuth client (code + PKCE).
-  redirectUri: '',
+  "enabled": true,
+  "guestEnabled": false,
+  "activitySharingEnabled": false,
+  "librarySharingEnabled": true,
+  "apiBase": "https://csofts5u3k.execute-api.us-east-1.amazonaws.com",
+  "issuer": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_HHbGrkBGa",
+  "clientId": "6atbl0arnapp86pavlikgp1dkr",
+  "authDomain": "https://rengongfu-teacher-pilot-446891419527.auth.us-east-1.amazoncognito.com",
+  "scope": "openid",
+  "redirectUri": "https://terrain-staging.musedlab.org/index.html"
 });

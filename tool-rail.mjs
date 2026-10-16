@@ -2,8 +2,10 @@
 export function installToolRail({preferenceKey}){
  const body=document.body,rail=document.querySelector('.canvas-tools'),toggle=document.getElementById('leftHanded'),hint=document.getElementById('toolHint');
  try{toggle.checked=localStorage.getItem(preferenceKey)==='true';}catch{}
- const apply=()=>{body.dataset.handedness=toggle.checked?'left':'right';hint.hidden=true;};
- apply();toggle.onchange=()=>{apply();try{localStorage.setItem(preferenceKey,String(toggle.checked));}catch{}};
+ const toolsOnLeft=document.getElementById('toolsOnLeft');
+ const apply=()=>{body.dataset.handedness=toggle.checked?'left':'right';if(toolsOnLeft)toolsOnLeft.checked=!toggle.checked;for(const input of [toolsOnLeft,toggle])input?.closest('.tool-position-choice')?.classList.toggle('is-selected',input.checked);hint.hidden=true;};
+ const save=()=>{apply();try{localStorage.setItem(preferenceKey,String(toggle.checked));}catch{}};
+ apply();toggle.onchange=save;if(toolsOnLeft)toolsOnLeft.onchange=save;
  function show(button){
   if(!button||button.disabled)return;
   const bounds=button.getBoundingClientRect(),frame=document.querySelector('.instrument').getBoundingClientRect();
@@ -13,6 +15,7 @@ export function installToolRail({preferenceKey}){
  rail.addEventListener('pointerover',e=>{if(e.pointerType!=='touch')show(e.target.closest('button'));});
  rail.addEventListener('pointerleave',()=>hint.hidden=true);
  rail.addEventListener('pointerdown',()=>hint.hidden=true);
+ rail.addEventListener('click',()=>hint.hidden=true);
  rail.addEventListener('focusin',e=>show(e.target.closest('button')));
  rail.addEventListener('focusout',()=>hint.hidden=true);
  rail.addEventListener('scroll',()=>hint.hidden=true,{passive:true,capture:true});

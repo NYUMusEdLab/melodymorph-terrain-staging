@@ -1,6 +1,6 @@
 import {workshopActivity} from './activity.mjs';
 // Matches the owner's proposed Free Play contract, not a separate tracking service.
-export const RELEASE_ID='melodymorph-workshop-0.1.9-gallery-candidate-r2';
+export const RELEASE_ID='melodymorph-workshop-0.1.9-gallery-candidate-r5';
 export const TOOL_ID='melodymorph';
 export const CONNECT_KIND='rgf-pilot-connect-v1';
 const parents=/^\/rengongfu-sandbox\/workbench\/teacher-pilot\/(?:live\.html|callback\.html|index\.html|phone\.html)?$/;

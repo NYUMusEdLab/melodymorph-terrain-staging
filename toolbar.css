@@ -13,9 +13,10 @@ body.workspace-app .canvas-tools button{position:relative;display:flex;flex-dire
 html:not([lang=zh-CN]) :is(.tool-label,.tool-group h2,.pitch-caption)>[lang=zh-CN],html[lang=zh-CN] :is(.tool-label,.tool-group h2,.pitch-caption)>[lang=en]{display:none}
 body.workspace-app .canvas-tools button:hover:not(:disabled){background:#e1e9e2}
 body.workspace-app .canvas-tools :is(.mode-button,#erase,#mute)[aria-pressed=true]{background:#254d45;border-color:#254d45;color:#f4f7ef;box-shadow:none}
-body.workspace-app .canvas-tools #record{color:#96343a}
-body.workspace-app .canvas-tools .record-button.active{background:#96343a;border-color:#96343a;color:white}
-#record .tool-label{font-size:9px;max-width:100%}
+body.workspace-app .canvas-tools #record{gap:2px;color:#96343a}
+body.workspace-app .canvas-tools #record.active{background:#96343a;border-color:#96343a;color:#fff;box-shadow:none}
+body.workspace-app .canvas-tools #record>svg{width:20px;height:20px;flex:0 0 20px}
+body.workspace-app .canvas-tools #record .tool-label{display:grid;place-items:center;font-size:9px;line-height:1.1;min-height:2.2em;max-width:100%;flex:0 0 auto}
 body.workspace-app .canvas-tools button:focus:not(:focus-visible){outline:none}
 body.workspace-app .canvas-tools button:focus-visible{outline:3px solid #3869ba;outline-offset:-3px}
 body.workspace-app .canvas-tools button:disabled{opacity:.42;background:transparent}
@@ -24,9 +25,9 @@ body.workspace-app .canvas-tools :is(#mute,#draw){grid-column:1/-1;flex-directio
 body.workspace-app .canvas-tools #mute{border-top:1px solid #d3dcd5;margin-top:4px!important}
 body.workspace-app .canvas-tools #draw:not([aria-pressed=true]){background:#d7e9d9;border-color:#a7c7ad;color:#234c38}
 body.workspace-app .canvas-tools #draw:not([aria-pressed=true]):hover{background:#c3dec8}
-body.workspace-app .canvas-tools #erase:not([aria-pressed=true]){background:#f4c6ba;border-color:#cc8b7c;color:#642d25}
-body.workspace-app .canvas-tools #erase:not([aria-pressed=true]):hover{background:#edb3a4}
-body.workspace-app .canvas-tools #erase[aria-pressed=true]{background:#913e36;border-color:#913e36;color:#fff;box-shadow:none}
+body.workspace-app .canvas-tools #erase,body.workspace-app .canvas-tools #erase[aria-pressed=true]{background:#fdfdf9;border-color:transparent;color:#96345a}
+body.workspace-app .canvas-tools #erase:hover{background:#e1e9e2}
+body.workspace-app .canvas-tools #erase[aria-pressed=true]{border-color:#96345a;box-shadow:inset 0 0 0 1px #96345a}
 .canvas-tools :is(#mute,#draw) .tool-label{font-size:11px}
 .rail-recover{flex:none;border-top:1px solid #d3dcd5;padding-top:8px;margin-top:5px}
 .rail-recover .tool-group{margin:0}
@@ -87,6 +88,8 @@ body[data-guide-open=true] .record-bar.recording{top:8px;bottom:auto}
  body.workspace-app .canvas-tools{padding:5px}
  .tool-grid{grid-template-columns:1fr;gap:3px}
  body.workspace-app .canvas-tools button{height:48px}
+ body.workspace-app .canvas-tools #record{padding:3px}
+ body.workspace-app .canvas-tools #record>svg{width:18px;height:18px;flex-basis:18px}
  .canvas-tools button svg{width:20px;height:20px}
  .canvas-tools .tool-label{font-size:9px;line-height:1.15}
  .tool-group{margin-bottom:10px}
@@ -128,3 +131,20 @@ body.canvas-fullscreen #canvasViewLabel{max-width:140px}
  body.canvas-fullscreen #paletteToggle{font-size:11px;padding:4px;min-width:62px}
  body.canvas-fullscreen #languageSwitch button{padding:6px;font-size:11px}
 }
+
+/* Put personal layout choices before the saved-work list, where they are easy to find. */
+.tool-position{margin:0 0 20px;padding:12px;border:1px solid #a9c1b4;border-radius:10px;background:#e9f0e9;min-width:0}
+.tool-position legend{font-size:14px;font-weight:650;color:#294d46;padding:0 5px}
+.tool-position p{font-size:12px;line-height:1.45;margin:0 0 10px;color:#4e675d}
+.tool-position-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.tool-position-choice{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:104px;padding:10px 4px;border:2px solid #bccbc0;border-radius:8px;background:#fff;color:#405b50;cursor:pointer;touch-action:manipulation}
+.tool-position-choice.is-selected{border-color:#254d45;background:#254d45;color:#fff}
+.tool-position-choice:focus-within{outline:3px solid #3869ba;outline-offset:2px}
+.workspace-panel .tool-position-choice input{position:absolute;top:7px;right:7px;width:16px;height:16px;min-height:16px;margin:0;accent-color:#254d45}
+.tool-position-choice svg{width:50px;height:30px;margin:2px 14px 2px 0;flex:none}
+.tool-position-choice strong{font-size:12px;line-height:1.3;text-align:center}
+.tool-position-choice small{font-size:10px;line-height:1.3;text-align:center;color:inherit}
+.tool-position .tool-position-note{margin:10px 0 0;font-size:11px}
+/* Keep the menu destination visible on tablet; retain the icon in tight fullscreen. */
+body:not(.canvas-fullscreen) .workspace-menu>summary>span{display:inline}
+@media(max-width:650px){body:not(.canvas-fullscreen) .workspace-menu>summary{font-size:11px;gap:5px;padding:7px}}

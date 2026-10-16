@@ -15,6 +15,7 @@ import {selectionKeys,selectionFor,selectionSize,itemsInBox,shiftSelection,copyS
 import {Sound} from './audio.mjs';
 import {reportActivity} from './activity.mjs';
 import {pathHits} from './paths.mjs';
+import {PathCapture} from './path-capture.mjs';
 import {paletteKeys,paletteLayout,paletteIntent} from './palette.mjs';
 import {TONICS,jianpuMarkup,jianpuDescription} from './notation.mjs';
 let paletteGeometry=null,paletteCentered=false;
@@ -197,10 +198,11 @@ function beginGroupGesture(e,point,playPath=null){
 }
 
 function moveGroup(g,dx,dy){const moved=clone(g.originals);shiftSelection(moved,dx,dy);moved.bells.forEach((b,i)=>{g.targets.bells[i].x=b.x;g.targets.bells[i].y=b.y;});moved.paths.forEach((p,i)=>g.targets.paths[i].points=p.points);moved.ink.forEach((stroke,i)=>{const points=strokePoints(g.targets.ink[i]);points.splice(0,points.length,...strokePoints(stroke));});positionBells();renderInk();}
-async function startPath(path,restart=false){if(silentEdit&&!activePaths.has(path.id))return;const epoch=pathEpoch;try{if((!sound.ready&&!await sound.unlock())||epoch!==pathEpoch)return;if(activePaths.has(path.id)&&!restart){reportActivity('path_stop');activePaths.delete(path.id);syncPathPlayback();return;}if(silentEdit||!project.paths.includes(path))return;reportActivity('path_play');activePaths.set(path.id,pathState(path,sound.now,restart?project.paths.filter(p=>p!==gesture?.path):[]));syncPathPlayback();runPaths();}catch{status('Audio could not start for this path.',true);}}
+function playablePaths(){return project.paths.filter(p=>p!==gesture?.path||gesture?.capture?.closure);}
+async function startPath(path,restart=false,preview=null){if(silentEdit&&!activePaths.has(path.id))return;const epoch=pathEpoch;try{if((!sound.ready&&!await sound.unlock())||epoch!==pathEpoch)return;if(preview&&preview.capture.closure!==preview.closure)return;if(activePaths.has(path.id)&&!restart){reportActivity('path_stop');activePaths.delete(path.id);syncPathPlayback();return;}if(silentEdit||!project.paths.includes(path))return;reportActivity('path_play');const at=preview?Math.max(0,sound.now-Math.max(0,(performance.now()-preview.boundaryAt)/1000)):sound.now;activePaths.set(path.id,pathState(path,at,restart?playablePaths():[]));syncPathPlayback();runPaths();}catch{status('Audio could not start for this path.',true);}}
 function runPaths(){if(pathFrame!==null)return;const epoch=pathEpoch,frame=requestAnimationFrame(()=>{
  if(epoch!==pathEpoch||pathFrame!==frame)return;
- pathFrame=null;const result=advancePathNetwork(project.paths.filter(p=>p!==gesture?.path),project.bells,activePaths,sound.now);
+ pathFrame=null;const result=advancePathNetwork(playablePaths(),project.bells,activePaths,sound.now);
  if(result.overflow){syncPathPlayback();status('Path network paused: too many crossings at once. Spread the start circles apart, then play again.',true);return;}
  for(const hit of result.notes){if(hit.bell.kind==='note')sound.note(eventOf(hit.bell),hit.bell.id,hit.at);else activate(hit.bell,false);}
  if(result.changes.length)syncPathPlayback();
@@ -245,7 +247,7 @@ $('stage').onpointerdown=e=>{
  if(mode==='draw'||mode==='path'){
   if(gesture)return;if(project.ink.length>=500||project.paths.length>=200){status('This landscape has reached the line limit.',true);return;}checkpoint();
   if(mode==='draw'){const stroke={points:[[point.x,point.y]],color:inkColor,width:inkWidth};project.ink.push(stroke);selectObject('ink:'+(project.ink.length-1));gesture={type:'ink',pointer:e.pointerId,stroke};}
-  else{const path={id:id(),label:'Path '+(project.paths.length+1),points:[{...point,time:0}]};project.paths.push(path);selectObject('path:'+path.id);gesture={type:'path',pointer:e.pointerId,path,start:performance.now()};touches.set(e.pointerId,new Set());strumAt(e);}
+  else{const path={id:id(),label:'Path '+(project.paths.length+1),points:[{...point,time:0}]};project.paths.push(path);selectObject('path:'+path.id);gesture={type:'path',pointer:e.pointerId,path,start:performance.now(),capture:new PathCapture(point)};touches.set(e.pointerId,new Set());strumAt(e);}
   renderInk();return;
  }
  if(mode==='play'){if(bell){reportActivity(bell.kind==='recorder'?(sound.groups.has(bell.id)?'phrase_stop':'phrase_play'):'bell_play');activate(bell);}else if(pathButton){const path=project.paths.find(p=>p.id===pathButton.dataset.path);if(path)startPath(path);}return;}
@@ -269,45 +271,59 @@ $('stage').oncontextmenu=e=>{
  const key=canvasObjectKey(e.target);if(!key)return;
  endGestureSafely();eraseObject(key);
 };
-function strumAt(e){
- const p=worldPoint(e.clientX,e.clientY),previous=touches.get(e.pointerId),start=touchPositions.get(e.pointerId)||p;
+function strumAt(e,p=worldPoint(e.clientX,e.clientY)){
+ const previous=touches.get(e.pointerId),start=touchPositions.get(e.pointerId)||p;
  const targets=[...project.bells,...((mode==='strum'||mode==='path')?project.paths.filter(path=>path!==gesture?.path).map(path=>({id:'path:'+path.id,kind:'path',...path.points[0],path})):[])];
  const result=pathHits([{...start,time:0},{...p,time:1}],0,1,targets,previous);
  for(const {bell} of result.hits)if(bell.kind==='path')startPath(bell.path,mode==='path'||e.type!=='pointerdown');else activate(bell);
  touches.set(e.pointerId,result.inside);touchPositions.set(e.pointerId,p);
 }
+function updatePathCapture(g,e){
+ const previous=g.capture.closure,p={...worldPoint(e.clientX,e.clientY),time:Math.min(600,(performance.now()-g.start)/1000)},closure=g.capture.append(p);
+ g.path.points=g.capture.points;
+ if(previous&&!closure){activePaths.delete(g.path.id);syncPathPlayback();}
+ if(!previous||!closure)strumAt(e,closure?.point||p);
+ else touchPositions.set(e.pointerId,p);
+ updateGestureLine('path:'+g.path.id,g.path.points.map(p=>`${p.x},${p.y}`).join(' '));
+ const button=pathButtons.get(g.path.id);if(button)button.dataset.loop=String(!!closure);
+ if(closure!==previous){
+  $('modeHint').querySelector('span').textContent=closure?(silentEdit?'Loop ready · Silent edit keeps it quiet':'Looping now · lift to keep it · move outside the start circle to extend'):'Trace a timed path across bells · return to the start circle to loop';
+  if(closure)startPath(g.path,true,{capture:g.capture,closure,boundaryAt:g.start+closure.point.time*1000});
+ }
+}
 $('stage').onpointermove=e=>{
  if(navigatorTouches.suppressed.has(e.pointerId))return;
  const view=navigatorTouches.move(e.pointerId,canvasPoint(e));if(view){project.view=view;position();return;}
  const group=groups.get(e.pointerId);if(group){const p=worldPoint(e.clientX,e.clientY);if(!group.moved&&Math.hypot(e.clientX-group.cx,e.clientY-group.cy)>6){if(!groupCheckpoint){checkpoint();groupCheckpoint=true;}group.moved=true;}if(group.moved)moveGroup(group,p.x-group.start.x,p.y-group.start.y);updateTrash(group,e.clientX,e.clientY);return;}
- if(touches.has(e.pointerId)){strumAt(e);if(gesture?.type!=='path')return;}if(!gesture||gesture.pointer!==e.pointerId)return;const g=gesture,p=worldPoint(e.clientX,e.clientY);
+ if(gesture?.type==='path'&&gesture.pointer===e.pointerId){updatePathCapture(gesture,e);return;}if(touches.has(e.pointerId)){strumAt(e);return;}if(!gesture||gesture.pointer!==e.pointerId)return;const g=gesture,p=worldPoint(e.clientX,e.clientY);
  if(g.type==='marquee'){showSelectionBox(g.start,p);selectIds([...g.base,...itemsInBox(project,g.start,p)]);}
- else if(g.type==='path'){if(g.path.points.length<3000)g.path.points.push({...p,time:Math.min(600,(performance.now()-g.start)/1000)});updateGestureLine('path:'+g.path.id,g.path.points.map(p=>`${p.x},${p.y}`).join(' '));}
  else if(g.type==='ink'){const points=strokePoints(g.stroke);if(points.length<3000){points.push([p.x,p.y]);updateGestureLine('ink:'+project.ink.indexOf(g.stroke),points.map(p=>p.join(',')).join(' '));}}
  else if(g.type==='pan'){project.view.x=g.origin.x+(e.clientX-g.x)/project.view.zoom;project.view.y=g.origin.y+(e.clientY-g.y)/project.view.zoom;position();}
  
 };
-function finishPointer(e){if(e.type==='pointerup'&&touches.has(e.pointerId))strumAt(e);const navigation=navigatorTouches.up(e.pointerId,e.type!=='pointerup');if(navigation){if(navigation.cancelled)project.view=navigation.origin;$('stage').classList.remove('navigating');position();persist();}touches.delete(e.pointerId);touchPositions.delete(e.pointerId);if(finishGroup(e))return;if(gesture?.pointer!==e.pointerId)return;const g=gesture;gesture=null;
+function finishPointer(e){if(e.type==='pointerup'&&gesture?.type==='path'&&gesture.pointer===e.pointerId)updatePathCapture(gesture,e);else if(e.type==='pointerup'&&touches.has(e.pointerId))strumAt(e);const navigation=navigatorTouches.up(e.pointerId,e.type!=='pointerup');if(navigation){if(navigation.cancelled)project.view=navigation.origin;$('stage').classList.remove('navigating');position();persist();}touches.delete(e.pointerId);touchPositions.delete(e.pointerId);if(finishGroup(e))return;if(gesture?.pointer!==e.pointerId)return;const g=gesture;gesture=null;
  if(g.type==='marquee'){$('selectionBox').hidden=true;if(e.type!=='pointerup')selectIds(g.before);return;}
- if(g.type==='path'){if(e.type!=='pointerup'||g.path.points.length<2){project.paths=project.paths.filter(p=>p!==g.path);selectObject(null);}else{const last=g.path.points.at(-1);const end={...worldPoint(e.clientX,e.clientY),time:Math.max(last.time,.01,Math.min(600,(performance.now()-g.start)/1000))};if(g.path.points.length<3000)g.path.points.push(end);else g.path.points[g.path.points.length-1]=end;setMode('select');reportActivity('path_draw');}}
- if(g.type==='ink'){if(e.type!=='pointerup')project.ink=project.ink.filter(s=>s!==g.stroke);else reportActivity('line_draw');}if(g.type==='pan'&&e.type!=='pointerup')project.view=g.origin; persist();render();if(g.type==='path'&&e.type==='pointerup'&&project.paths.includes(g.path)&&isLoopPath(g.path))startPath(g.path,true);
+ if(g.type==='path'){if(e.type!=='pointerup'||!g.capture.exited||g.path.points.length<2){activePaths.delete(g.path.id);project.paths=project.paths.filter(p=>p!==g.path);selectObject(null);}else{setMode('select');reportActivity('path_draw');}}
+ if(g.type==='ink'){if(e.type!=='pointerup')project.ink=project.ink.filter(s=>s!==g.stroke);else reportActivity('line_draw');}if(g.type==='pan'&&e.type!=='pointerup')project.view=g.origin; persist();render();
 }
 $('stage').onpointerup=finishPointer;$('stage').onpointercancel=finishPointer;$('stage').onlostpointercapture=finishPointer;
 for(const type of ['touchmove','gesturestart','gesturechange'])$('stage').addEventListener(type,e=>e.preventDefault(),{passive:false});
 function endGestureSafely(){
  hideTrash();
  $('selectionBox').hidden=true;if(gesture?.type==='marquee')selectIds(gesture.before);
- if(gesture?.type==='path'){project.paths=project.paths.filter(p=>p!==gesture.path);selectObject(null);}
+ if(gesture?.type==='path'){activePaths.delete(gesture.path.id);project.paths=project.paths.filter(p=>p!==gesture.path);selectObject(null);}
  if(gesture?.type==='ink'){project.ink=project.ink.filter(s=>s!==gesture.stroke);selectObject(null);}
  if(gesture?.type==='pan')project.view=gesture.origin;
  if(navigatorTouches.pinch)project.view=navigatorTouches.pinch.origin;
  for(const g of groups.values())if(g.moved)moveGroup(g,0,0);
  groups.clear();groupCheckpoint=false;gesture=null;touches.clear();touchPositions.clear();navigatorTouches.clear();$('stage').classList.remove('navigating');position();renderInk();
 }
-function setMode(next){if(previewActivity&&!['play','strum'].includes(next))return;endGestureSafely();if(mode!==next)reportActivity('mode_change');mode=next;for(const m of ['play','move','draw','strum','path','select','erase'])$(m).setAttribute('aria-pressed',m===next);$('stage').dataset.mode=next;document.body.dataset.tool=next;$('viewNavigation').hidden=next!=='move';syncDrawOptions();const hints={play:'Tap bells and path circles to play · canvas locked',move:'Drag bells to arrange · drag or pinch empty space to navigate',draw:'Choose a color and width · draw · Undo reverses your last stroke',strum:'Slide across bells or path play circles to play them',path:'Trace a timed path across bells · lift to finish · tap ▶ to replay',select:'Box-select · move or duplicate · use pitch buttons to transpose',erase:'Tap a bell, path or painted line to erase · Right-click also erases · Undo restores it'};$('modeHint').querySelector('strong').textContent=silentEdit?'Silent edit':$(next).getAttribute('aria-label');$('modeHint').querySelector('span').textContent=silentEdit?'Rearrange without triggering sound · running paths and phrases continue':hints[next];}
+function setMode(next){if(previewActivity&&!['play','strum'].includes(next))return;endGestureSafely();if(mode!==next)reportActivity('mode_change');mode=next;for(const m of ['play','move','draw','strum','path','select','erase'])$(m).setAttribute('aria-pressed',m===next);$('stage').dataset.mode=next;document.body.dataset.tool=next;$('viewNavigation').hidden=next!=='move';syncDrawOptions();const hints={play:'Tap bells and path circles to play · canvas locked',move:'Drag bells to arrange · drag or pinch empty space to navigate',draw:'Choose a color and width · draw · Undo reverses your last stroke',strum:'Slide across bells or path play circles to play them',path:'Trace a timed path across bells · return to the start circle to loop',select:'Box-select · move or duplicate · use pitch buttons to transpose',erase:'Tap a bell, path or painted line to erase · Right-click also erases · Undo restores it'};$('modeHint').querySelector('strong').textContent=silentEdit?'Silent edit':$(next).getAttribute('aria-label');$('modeHint').querySelector('span').textContent=silentEdit?'Rearrange without triggering sound · running paths and phrases continue':hints[next];}
 $('mute').onclick=()=>{silentEdit=!silentEdit;$('mute').setAttribute('aria-pressed',String(silentEdit));$('stage').classList.toggle('silent-edit',silentEdit);setMode(mode);};
 document.querySelectorAll('button[data-palette]').forEach(button=>button.onclick=()=>{if(project.palette===button.dataset.palette)return;checkpoint();project.palette=button.dataset.palette;reportActivity('display_change');changed();});
 for(const m of ['play','move','draw','strum','path','select','erase'])$(m).onclick=()=>setMode(mode===m?'play':m);
+// Erase remains active for canvas erasing, but a different interface action disarms it.
+document.addEventListener('click',e=>{const control=e.target.closest('button,summary');if(mode==='erase'&&control&&control.id!=='erase'&&!control.closest('#stage'))setMode('play');},true);
 function syncDrawOptions(){const strokes=mode==='select'?chosenSelection().ink:[];$('drawOptions').hidden=mode!=='draw'&&!strokes.length;
  for(const b of document.querySelectorAll('[data-ink-color]'))b.setAttribute('aria-pressed',String(strokes.length?strokes.every(s=>(s.color||INK_COLORS[0])===b.dataset.inkColor):inkColor===b.dataset.inkColor));
  for(const b of document.querySelectorAll('[data-ink-width]'))b.setAttribute('aria-pressed',String(strokes.length?strokes.every(s=>(s.width||3)===Number(b.dataset.inkWidth)):inkWidth===Number(b.dataset.inkWidth)));
@@ -398,7 +414,7 @@ function fitActivityView(){
 installActivityPlayer({load:loadLandscape,stop,fit:fitActivityView});
 
 // Optional central storage is isolated from startup, audio and tablet gestures.
-const cloudReady=!previewActivity?import('./terrain-cloud.mjs').then(({installTerrainCloud})=>installTerrainCloud({library,key:STORE,prepareShare(){finishRecording();return persist()?library.value.activeId:null;},loadRemote(value,existingId){
+const cloudReady=!previewActivity?import('./terrain-cloud.mjs').then(({installTerrainCloud})=>installTerrainCloud({library,key:STORE,canSync:()=>!capture&&!gesture&&!groups.size,prepareShare(){finishRecording();return persist()?library.value.activeId:null;},loadRemote(value,existingId){
   stop();rememberWorkspace();
   const result=library.restore(project,value,existingId);
   if(!saveFeedback(result))return null;loadLandscape(result.project);return library.value.activeId;

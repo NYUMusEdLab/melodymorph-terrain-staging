@@ -1,11 +1,11 @@
 import {TerrainAPI} from './terrain-api.mjs';
 import {TerrainSync,fingerprint} from './terrain-sync.mjs';
 import {showActivityShare} from './activity-share.mjs';
-export async function installTerrainCloud({library,key,loadRemote,prepareShare}){
+export async function installTerrainCloud({library,key,loadRemote,prepareShare,canSync=()=>true}){
   const host=document.querySelector('.landscape-library');if(!host)return;
   const section=document.createElement('section');section.className='terrain-cloud';section.dataset.noTranslate='';
   const title=document.createElement('h2');title.textContent='MusEDLab terrain library · 中央作品库';
-  const notice=document.createElement('p');notice.textContent='When enabled, landscapes save automatically for you and authorized MusEDLab staff. Guest storage uses a private browser key without requesting an account name or device location. Map publication needs your permission and staff review.';
+  const notice=document.createElement('p');notice.textContent='When enabled, only the current landscape saves automatically for you and authorized MusEDLab staff. Older local landscapes stay on this device until you open and save them. Guest storage uses a private browser key without requesting an account name or device location. Map publication needs your permission and staff review.';
   const state=document.createElement('p');state.role='status';state.textContent='Checking central storage…';
   const actions=document.createElement('div');actions.className='library-actions';
   const signIn=document.createElement('button');signIn.textContent='Sign in';
@@ -21,7 +21,7 @@ export async function installTerrainCloud({library,key,loadRemote,prepareShare})
   const resume=async()=>{clearTimeout(bootTimer);try{if(!api.me)await initialize();else await sync.flush();}catch{state.textContent='Saved locally. Sign-in service is offline; central sync will retry.';bootTimer=setTimeout(resume,10000);}};
   try{
     api=new TerrainAPI();
-    sync=new TerrainSync({library,api,storage:localStorage,key:key+':cloud-v1',onState:(message,items)=>{
+    sync=new TerrainSync({library,api,storage:localStorage,key:key+':cloud-v1',canSync,onState:(message,items)=>{
       state.textContent=message;conflicts.replaceChildren();
       for(const [localId,item] of items){
         const p=document.createElement('p');p.textContent='Cloud conflict: '+(library.value.entries.find(e=>e.id===localId)?.project.title||localId);
