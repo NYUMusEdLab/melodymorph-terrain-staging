@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>MusEDLab · Terrain library</title><link rel="stylesheet" href="terrain-catalog.css"></head><body><main>
+<nav><a href="index.html">Back to MelodyMorph</a><a href="terrain-world.html">World map</a><button id="login">Sign in</button><button id="logout" hidden>Sign out</button></nav>
+<p class="muted">MELODY MORPH / MUSEDLAB</p><h1>Terrain library</h1><p>Every saved idea has a place. Public map publication is a separate, curated decision.</p>
+<p id="message" role="status"></p><p id="identity" class="muted"></p>
+<form id="search" class="filters"><label>Collection<select id="scope"><option value="mine">My terrains</option><option value="shared">Shared with me</option><option value="admin" id="staffOption" hidden>Staff catalog · all terrains</option></select></label><label>Status<select id="status"><option value="">All statuses</option><option>draft</option><option>private</option><option>shared</option><option>published</option></select></label><label>Search<input id="query" maxlength="100" placeholder="Title, attribution or stable ID"></label><button>Search</button></form>
+<div id="results"></div><button id="more" hidden>Search next page</button><section id="detail" class="panel" hidden></section>
+<footer><p>Original MelodyMorph concept and design: Eric Rosenbaum. Experimental web reconstruction.</p></footer>
+</main><script type="module" src="terrain-catalog.mjs"></script></body></html>

@@ -1,0 +1,256 @@
+*{box-sizing:border-box}body{margin:0;background:#f4f2ec;color:#202a36;font:15px/1.5 system-ui,-apple-system,sans-serif}button,input,select{font:inherit}button{cursor:pointer;border:1px solid #d5d9db;border-radius:7px;padding:8px 12px;background:#fff;color:#24303e;touch-action:manipulation}button:hover{background:#edf2f0}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #3869ba;outline-offset:3px}button:disabled{opacity:.4;cursor:default}header{display:flex;justify-content:space-between;align-items:center;padding:24px 30px 18px}.eyebrow,.aside-title{font-size:11px;letter-spacing:.14em;font-weight:750;color:#53646b}.eyebrow{text-decoration:none}h1{font-size:28px;letter-spacing:-1px;margin:4px 0}h1 span{font-size:14px;font-weight:450;letter-spacing:0;color:#71808b;margin-left:12px}.head-actions{display:flex;gap:18px;align-items:center}.local{font-size:10px;letter-spacing:.1em;border:1px solid #afc6b9;color:#3f6752;border-radius:20px;padding:5px 9px}.stop{background:#293746;color:white;border-color:#293746}.stop:hover{background:#415566}main{display:grid;grid-template-columns:minmax(0,1fr) 274px;gap:20px;padding:0 30px}.instrument{border:1px solid #cbd2d7;border-radius:15px;overflow:hidden;background:#fff;min-width:0}.palette-top{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 8px}.timbres{display:flex;gap:6px}.timbres button{border:0;color:#5b6873;background:#f0f2f3}.timbres button[aria-pressed=true]{background:#263646;color:#fff}.palette-top label{font-size:12px;color:#60717a}select{border:0;background:transparent;padding:6px}#palette{display:flex;gap:8px;justify-content:space-around;padding:6px 18px;touch-action:none}.palette-note{width:44px;height:50px;border:0;background:transparent;position:relative;padding:0}.symbol{display:block;position:absolute;inset:0;background:var(--color);border:2px solid #fff8;box-shadow:0 3px 6px #0002;pointer-events:none}.piano .symbol{border-radius:50%}.vibes .symbol{clip-path:polygon(50% 0%,100% 100%,0 100%)}.pluck .symbol{clip-path:polygon(50% 0,61% 30%,85% 15%,70% 40%,100% 50%,70% 61%,85% 85%,60% 71%,50% 100%,39% 70%,15% 85%,29% 60%,0 50%,30% 39%,15% 15%,39% 30%)}.band .symbol{background:linear-gradient(0deg,transparent 40%,#fff8 40%,#fff8 60%,transparent 60%),var(--color)}.stripe .symbol{background:repeating-linear-gradient(90deg,transparent 0 7px,#fff7 7px 12px),var(--color)}.note-label{position:absolute;inset:0;display:grid;place-items:center;font-size:11px;font-weight:750;color:#17202c;text-shadow:0 1px 3px white;pointer-events:none}.palette-caption{font-size:11px;color:#64737c;text-align:center;padding:5px 5px 12px}.canvas-tools{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border-top:1px solid #e5e8e9;background:#f5f7f6}.canvas-tools button{font-size:11px;padding:6px 9px}.canvas-tools button[aria-pressed=true]{background:#dce8e1;border-color:#9dbbad}.modes{display:flex;gap:4px}#zoom{display:inline-block;min-width:40px;text-align:center;font-size:11px}#stage{height:480px;position:relative;overflow:hidden;touch-action:none;background-color:#1e2a38;background-image:radial-gradient(#53647565 1px,transparent 1px);background-size:24px 24px;isolation:isolate}#world{position:absolute;width:1px;height:1px;transform-origin:0 0}#ink{position:absolute;overflow:visible;pointer-events:none;width:1px;height:1px}#ink polyline{fill:none;stroke:#d9e2dc;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.bell{position:absolute;width:64px;height:64px;transform:translate(-50%,-50%);border:0;background:transparent!important;padding:0;touch-action:none;cursor:grab}.bell:focus-visible{outline:3px solid #fff;outline-offset:6px}.bell.selected:after{content:'';position:absolute;inset:-7px;border:1px dashed #c7dddc;border-radius:14px;pointer-events:none}.bell .note-label{font-size:13px}.bell.playing .symbol{filter:brightness(1.5);transform:scale(1.14)}.bell.recorder{width:126px;height:86px;border:1px solid #b6cbd6;border-radius:14px;background:#13202d!important;box-shadow:0 4px 12px #0003}.bell.recorder.playing{background:#1b3444!important;border-color:#eef5f8;box-shadow:0 0 0 4px #abc9b930}.recorder svg{width:105px;height:48px;pointer-events:none}.recorder .rec-label{position:absolute;top:91px;left:-12px;width:150px;text-align:center;font-size:12px;color:#eef1f5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.recorder small{position:absolute;bottom:4px;right:9px;font-size:9px;color:#bed0d9}.record-bar{display:flex;align-items:center;gap:16px;padding:12px 20px;background:#fff}.record-bar strong{display:block;font-size:12px}.record-bar span{display:block;font-size:11px;color:#73818b}#counts{margin-left:auto;white-space:nowrap}.record-bar #recordHelp{margin-top:3px}#empty{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#c5d2de;text-align:center;width:90%;pointer-events:none}.empty-mark{color:#8db8a4;font-size:26px}#empty h2{font-size:27px;font-weight:550;line-height:1.3;color:#edf2f5;letter-spacing:-.7px}#empty p{font-size:13px}#empty button{pointer-events:auto;border-color:#627483;background:#263747;color:#dce8e9;font-size:12px}#modeHint{position:absolute;bottom:11px;left:15px;color:#b8c9d5;font-size:10px;pointer-events:none;background:#1e2a38c9;padding:4px 7px;border-radius:5px}.field{display:block;font-size:11px;color:#687b80;margin-top:14px}.field input{display:block;width:100%;font-size:15px;border:0;border-bottom:1px solid #c6d0d1;background:none;padding:5px 0;color:#263b43}#saveStatus{font-size:11px;color:#466c58;min-height:32px}.file-actions{display:grid;grid-template-columns:1fr;gap:7px}.file-actions button{font-size:12px}.history{display:flex;gap:6px;margin-top:9px}.history button{font-size:11px;padding:6px 9px;flex:1}.divider{height:1px;background:#d3dcda;margin:22px 0}.steps{padding-left:20px;font-size:12px;color:#5e7077}.steps li{padding-left:3px;margin-bottom:12px}.steps strong{color:#2d454b}#selection{background:#e7eae3;padding:14px;border-radius:9px;margin-top:18px}#selection p{font-size:12px;margin:8px 0}#selection input{width:100%;padding:6px;border:1px solid #becbc2;border-radius:4px;background:white;margin:8px 0;font-size:12px}#selection button{font-size:11px;padding:4px 9px}.scope{font-size:11px;color:#5b6e75;margin-top:22px}.scope summary{cursor:pointer;color:#29494f}.scope a{color:#365f72}footer{display:flex;justify-content:space-between;padding:18px 30px;font-size:10px;color:#76848a;gap:20px}aside{padding-top:8px}.drag-ghost{position:fixed;z-index:20;pointer-events:none;opacity:.8}.toast{color:#9a3d31!important}@media(min-width:1500px){#stage{height:540px}}@media(max-width:1000px){main{grid-template-columns:minmax(0,1fr);padding:0 15px}aside{display:grid;grid-template-columns:1fr 1fr;gap:12px}aside>.aside-title,aside>.divider,aside>.steps{display:none}.scope{margin:0}header{padding:18px 15px}h1 span{display:block;margin:0;font-size:11px}.palette-note{width:36px;height:42px}#palette{gap:3px}footer{padding:16px}.record-bar strong{font-size:11px}.record-bar #recordHelp{display:none}}@media(max-width:520px){h1{font-size:23px}.head-actions{gap:8px}.local{display:none}.palette-top{padding:8px}.timbres button{font-size:11px;padding:6px}.palette-note{width:25px;height:35px}.palette-note .note-label{font-size:9px}#palette{padding:4px 8px}.canvas-tools{padding:7px 5px}.canvas-tools button{font-size:10px;padding:6px}#stage{height:440px}.record-bar{padding:12px;gap:8px}#counts{display:none}.record-bar strong{font-size:10px}footer{display:block}footer span{display:block}}
+@media(min-width:1001px){#stage{height:clamp(300px,calc(100dvh - 400px),540px)}}
+#ink{pointer-events:none}#ink .drawn-line{pointer-events:stroke;stroke:#d9e2dc;stroke-width:10;stroke-opacity:.65;cursor:pointer}#ink .musical-line{stroke:#b8c9e3;stroke-dasharray:6 6;stroke-width:10}#ink .selected-line{stroke:#ffcf72;stroke-opacity:1;stroke-width:12}#ink .path-head{fill:#fff;stroke:#678fbd;stroke-width:2;pointer-events:none}.path-button{position:absolute;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#e6eef8;color:#294965;border:2px solid #8faec9;z-index:3;padding:0;touch-action:none}.canvas-tools{flex-wrap:wrap}.modes{flex-wrap:wrap}.canvas-tools button{min-height:40px}.canvas-tools #erase[aria-pressed=true]{background:#913e36;border-color:#913e36;color:white}#stage[data-mode=erase]{box-shadow:inset 0 0 0 3px #cf8273}.scope{margin-bottom:16px}@media(max-width:700px){.canvas-tools button{min-height:44px;font-size:12px}.modes{gap:5px}.canvas-tools{gap:6px}#stage{height:440px}.record-bar{flex-wrap:wrap}.palette-caption{font-size:10px}}@media(min-width:1001px){#stage{height:clamp(300px,calc(100dvh - 420px),540px)}}
+#ink .line-hit{stroke:transparent;stroke-width:28;stroke-opacity:1;pointer-events:stroke;vector-effect:non-scaling-stroke}#ink .line-visible{stroke:#d9e2dc;stroke-width:3;stroke-opacity:.8;pointer-events:none}#ink .line-visible.musical-line{stroke:#b8c9e3;stroke-dasharray:6 6;stroke-width:3}#ink .line-visible.selected-line{stroke:#ffcf72;stroke-width:5;stroke-opacity:1}
+.canvas-tools button{min-height:44px;min-width:44px}#ink .line-hit{stroke-width:36}
+
+/* Newly drawn mode symbols; native buttons preserve Tab, Enter and Space. */
+.canvas-tools{position:relative;z-index:6;overflow:visible}
+.modes{align-items:center}
+.canvas-tools .mode-button,.canvas-tools .record-button,.canvas-tools .copy-button{position:relative;display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;padding:8px;color:#344c56;border:1px solid #bdc9c9;border-radius:9px}
+.mode-button svg,.record-button svg,.copy-button svg{width:26px;height:26px;pointer-events:none}
+.canvas-tools .mode-button[aria-pressed=true]{background:#254d4b;color:#fff;border-color:#254d4b;box-shadow:inset 0 -3px 0 #8fe0c2}
+.canvas-tools #erase.mode-button[aria-pressed=true]{box-shadow:inset 0 -3px 0 #ffd5b6}
+.canvas-tools .mode-button:focus-visible,.canvas-tools .record-button:focus-visible,.canvas-tools .copy-button:focus-visible{outline:3px solid #3869ba;outline-offset:3px}
+.mode-tooltip{position:absolute;z-index:20;top:calc(100% + 8px);left:50%;transform:translateX(-50%);display:block;width:max-content;max-width:180px;padding:6px 10px;border:1px solid #d5e2e3;border-radius:7px;background:#172f3b;color:#fff;font-size:12px;font-weight:500;line-height:1.4;text-align:center;visibility:hidden;pointer-events:none;box-shadow:0 3px 9px #0002}
+.mode-tooltip span{display:block}
+.mode-tooltip [lang=zh-CN]{color:#d4e4e5;font-size:11px}
+.mode-button:first-child .mode-tooltip{left:0;transform:none}
+.mode-button:hover .mode-tooltip,.mode-button:focus-visible .mode-tooltip,.record-button:hover .mode-tooltip,.record-button:focus-visible .mode-tooltip,.copy-button:hover .mode-tooltip,.copy-button:focus-visible .mode-tooltip{visibility:visible;pointer-events:auto}
+.mode-tooltip:before{content:'';position:absolute;inset:-9px 0 auto;height:9px}
+#canvasUndo{margin-left:5px}
+#modeHint{max-width:calc(100% - 30px);line-height:1.45}
+#modeHint strong,#modeHint>span{display:block}
+#modeHint strong{color:#edf5f4;font-size:11px;font-weight:600}
+@media(forced-colors:active){.canvas-tools .mode-button[aria-pressed=true]{outline:2px solid Highlight;outline-offset:-5px}}
+
+/* Piano-style chromatic palette: stable touch targets across screen sizes. */
+#paletteViewport{margin:2px 14px 0;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:thin;background:#d8dedb;border-radius:8px;touch-action:none}
+#palette{position:relative;display:block;height:124px;padding:0;gap:0;touch-action:none}
+#palette .piano-key{position:absolute;top:0;height:118px;border:1px solid #b6c0bc;border-radius:0 0 6px 6px;background:#fafaf6;padding:0;touch-action:none;user-select:none;cursor:grab}
+#palette .piano-key:hover{background:#e9eee8}
+#palette .black-key{height:72px;background:#2b3640;border:1px solid #101c24;z-index:2;box-shadow:0 3px 3px #0003}
+#palette .black-key:hover{background:#48545e}
+#palette .symbol{inset:auto;left:50%;bottom:25px;width:34px;height:34px;transform:translateX(-50%)}
+#palette .black-key .symbol{width:28px;height:28px;bottom:26px}
+#palette .note-label{inset:auto 0 6px;font-size:11px;text-shadow:none}
+#palette .black-key .note-label{color:#f5f6f4}
+#palette .piano-key:focus-visible{outline:3px solid #3d8ccd;outline-offset:-4px;z-index:3}
+#visibleRange{font-size:12px;font-weight:650;color:#4e626b;white-space:nowrap}
+.drag-ghost.palette-note{width:44px;height:50px}
+@media(max-width:520px){.palette-top{flex-wrap:wrap;gap:6px}#paletteViewport{margin:2px 8px 0}#visibleRange{font-size:11px}.palette-caption{padding-bottom:8px}}
+@media(min-width:1001px){#stage{height:clamp(300px,calc(100dvh - 482px),540px)}}
+
+/* The colored bells are the default; keyboard surfaces are an optional guide. */
+.palette-options{display:flex;align-items:center;gap:14px}
+.palette-top .piano-overlay-toggle{display:flex;align-items:center;gap:6px;min-height:44px;color:#425960;cursor:pointer;white-space:nowrap}
+#pianoOverlay{width:18px;height:18px;accent-color:#3d6558;margin:0}
+#paletteViewport:not(.piano-overlay){background:transparent}
+#paletteViewport:not(.piano-overlay) .piano-key{top:48px;height:66px;background:transparent;border-color:transparent;box-shadow:none;border-radius:8px}
+#paletteViewport:not(.piano-overlay) .black-key{top:8px;height:54px}
+#paletteViewport:not(.piano-overlay) .piano-key:hover{background:#e9eee8}
+#paletteViewport:not(.piano-overlay) .symbol{width:44px;height:44px;bottom:20px}
+#paletteViewport:not(.piano-overlay) .black-key .symbol{width:32px;height:32px;bottom:20px}
+#paletteViewport:not(.piano-overlay) .note-label{bottom:2px;color:#334751}
+@media(max-width:520px){.palette-options{gap:12px;justify-content:space-between;flex:1}.palette-top .piano-overlay-toggle{font-size:12px}}
+
+#palette .piano-key.playing .symbol{filter:brightness(1.3);transform:translateX(-50%) scale(1.14)}
+
+.palette-top{flex-wrap:wrap;gap:4px 14px}
+.octave-controls{display:flex;align-items:center;gap:6px}
+.octave-controls button{width:44px;height:44px;padding:0;border:0;background:transparent;font-size:18px}
+.octave-controls button:hover{background:#edf2f0}
+#paletteViewport:focus-visible{outline:3px solid #3869ba;outline-offset:-3px}
+
+/* The requested dark tray makes octave intensity differences visible. */
+#paletteViewport,#paletteViewport:not(.piano-overlay){background:#05080c}
+#paletteViewport:not(.piano-overlay) .piano-key:hover{background:#ffffff14}
+#paletteViewport:not(.piano-overlay) .note-label{color:#f5f7fa}
+#paletteViewport:focus-visible{outline-color:#88bfff}
+#palette .piano-key:focus-visible{outline-color:#88bfff}
+.display-settings{font-size:12px;margin-top:14px;padding:10px;border:1px solid #c5d0cb;border-radius:8px}
+.display-settings summary{cursor:pointer;color:#29494f;font-weight:650}
+.display-settings label{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:8px}
+.display-settings select{max-width:165px;background:#fff;border:1px solid #c5d0cb;border-radius:5px;min-height:40px}
+#notationReference{font-size:11px;line-height:1.5;color:#52666f;margin:9px 0 0}
+.audio-status{font-size:11px;color:#52666f;margin:12px 0}
+#retrySounds{font-size:11px;min-height:40px}
+.jianpu{display:inline-grid;grid-template-rows:10px 18px 10px;align-items:center;justify-items:center;min-width:25px;padding:1px 3px;background:#07121be8;color:#fff;border-radius:5px;font-size:15px;line-height:18px;text-shadow:none}
+.octave-dots{display:flex;flex-direction:column;justify-content:center;line-height:5px;font-size:12px;height:10px}
+.octave-dots i{font-style:normal;display:block;height:5px;line-height:5px}
+#palette .note-label:has(.jianpu){bottom:3px}
+#paletteViewport:not(.piano-overlay) .symbol{box-shadow:none}
+@media(max-width:1000px){.display-settings{margin-top:0}.audio-status{margin:4px 0}}
+
+/* Phrase capture shares the tools row; active capture remains visibly distinct. */
+.canvas-tools .record-button{margin-left:6px;color:#a6373b}
+.canvas-tools .record-button.active{background:#96343a;border-color:#96343a;color:#fff;box-shadow:inset 0 -3px 0 #ffc4c4}
+.record-stop-icon{display:none}.record-button.active .record-stop-icon{display:block}.record-button.active .record-start-icon{display:none}
+@media(forced-colors:active){.canvas-tools .record-button.active{outline:2px solid Highlight;outline-offset:-5px}}
+
+#selectionBox{position:absolute;z-index:4;border:1.5px solid #a4ddff;background:#7ac9ff22;pointer-events:none}#selectionBox[hidden]{display:none}
+
+/* Keep the instrument in the viewport; secondary controls open over its right edge. */
+html{height:100%}body.workspace-app{height:100dvh;min-height:420px;display:flex;flex-direction:column;overflow:hidden}
+.workspace-app>header{flex:0 0 auto;min-height:62px;padding:6px 12px;gap:10px}
+h1{font-size:21px;line-height:1.15;margin:2px 0}h1 span{font-size:11px;margin-left:8px}.eyebrow{font-size:9px}.creator-credit{margin:2px 0 0;font-size:10px;color:#53646b}
+.workspace-app .eyebrow{display:block;line-height:12px}.workspace-app h1{margin:0}
+.head-actions{gap:8px}.head-actions>button,.workspace-menu>summary{min-height:44px;min-width:44px}
+.head-actions svg{width:23px;height:23px;display:block;flex:none}#canvasView{display:grid;place-items:center;padding:9px}
+.workspace-app>main{display:flex;flex:1;min-height:0;padding:0 8px 8px;gap:0}
+.instrument{position:relative;display:flex;flex-direction:column;flex:1;min-height:0;border-radius:10px}
+.palette-top{flex:none;padding:4px 10px;gap:4px 12px}.timbres button{min-height:44px;padding:6px 12px;font-size:12px}
+#paletteViewport{flex:none;margin:0 8px 5px}
+#paletteViewport{scrollbar-width:none}#paletteViewport::-webkit-scrollbar{display:none}
+#paletteViewport:not(.piano-overlay) #palette{height:104px}
+#paletteViewport:not(.piano-overlay) .piano-key{top:44px;height:52px}
+#paletteViewport:not(.piano-overlay) .black-key{top:8px;height:44px}
+#paletteViewport:not(.piano-overlay) .symbol{top:4px;bottom:auto}
+#paletteViewport:not(.piano-overlay) .black-key .symbol{top:6px;bottom:auto}
+#paletteViewport:not(.piano-overlay) .note-label{inset:4px 0 auto;height:44px}
+#paletteViewport:not(.piano-overlay) .black-key .note-label{inset:0;height:44px}
+.canvas-tools{flex:none;align-items:center;padding:5px 8px;gap:6px}.canvas-tools>div:last-child{display:flex;align-items:center;gap:3px;flex:none}
+.modes{gap:4px}.canvas-tools #canvasUndo{font-size:0;width:44px;margin-left:0}.canvas-tools #canvasUndo:before{content:'↶';font-size:23px}
+.canvas-tools .record-button{margin-left:0;line-height:1}.canvas-tools .record-button svg{display:block;width:26px;height:26px;align-self:center;justify-self:center}
+#stage{flex:1;min-height:0;height:auto!important}
+#modeHint{bottom:8px;left:8px;max-width:65%;padding:3px 6px}#modeHint>span{display:none}
+.record-bar{position:absolute;right:12px;bottom:12px;pointer-events:none;margin:0;padding:0;background:transparent}
+.record-bar:not(.recording){width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.record-bar.recording{background:#742c35;color:#fff;border:1px solid #ffb8b8;border-radius:6px;padding:5px 9px}.record-bar strong{font-size:12px}
+.workspace-menu{position:relative;z-index:30}.workspace-menu>summary{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #b9c9c1;border-radius:7px;background:#fff;color:#294d46;cursor:pointer;font-size:12px;list-style:none;touch-action:manipulation}.workspace-menu>summary::-webkit-details-marker{display:none}
+.workspace-menu>summary:focus-visible{outline:3px solid #3869ba;outline-offset:2px}.workspace-menu[open]>summary{background:#dce8e1}
+.workspace-panel{position:fixed;top:68px;right:12px;width:min(340px,calc(100vw - 24px));max-height:calc(100dvh - 80px);display:block;padding:16px;overflow:auto;overscroll-behavior:contain;background:#f4f2ec;border:1px solid #bcc9c3;border-radius:12px;box-shadow:0 10px 40px #0003;font-size:13px}
+.drawer-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:8px}.drawer-heading strong{font-size:15px}.drawer-heading button{min-width:44px;min-height:44px;padding:0;font-size:24px}
+.workspace-panel .field{font-size:12px}.workspace-panel input{min-height:44px;font-size:16px}.workspace-panel button{min-height:44px}.workspace-panel #saveStatus{min-height:0;margin:10px 0 16px}
+.workspace-panel .aside-title{display:block}.workspace-panel .steps{display:block}.workspace-panel .history{flex-wrap:wrap}.workspace-panel .display-settings{margin-top:14px}
+.workspace-panel details{border-top:1px solid #cad4ce;padding-top:12px;margin-top:16px}.workspace-panel details summary{min-height:44px;display:list-item;align-content:center;cursor:pointer;color:#29494f;font-weight:650;font-size:13px}.workspace-panel .display-settings{padding:0 12px}
+.workspace-panel .scope{font-size:12px}.workspace-panel .audio-status{margin:12px 0}.workspace-panel #counts{margin:0;color:#5d706b;font-size:11px}.panel-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px}.workspace-panel .local{display:inline-block}
+.canvas-fullscreen:not(.show-palette) .palette-top,.canvas-fullscreen:not(.show-palette) #paletteViewport{display:none}
+@media(max-width:740px){.canvas-tools{flex-wrap:wrap}.canvas-tools>div:last-child{margin-left:auto}.modes{flex-wrap:wrap}h1 span{display:none}.workspace-menu>summary{padding:9px}.workspace-menu>summary>span{display:none}.palette-options{gap:6px}.timbres button{padding:6px 10px}.palette-top .piano-overlay-toggle{font-size:11px}}
+@media(max-width:520px){.workspace-app>header{padding:5px 8px}h1{font-size:19px}.workspace-app>main{padding:0 4px 4px}.palette-top{padding:3px 8px}.palette-options{justify-content:space-between}.canvas-tools{padding:4px}.canvas-tools .modes{gap:3px}.workspace-panel{right:8px;width:calc(100vw - 16px)}#modeHint{max-width:55%}.record-bar strong{font-size:10px}.creator-credit{font-size:9px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+
+/* Keep annotation last; selected path and start circle form one object. */
+.canvas-tools #draw{margin-left:8px}
+.path-button.selected{outline:2px dashed #ffcf72;outline-offset:5px;box-shadow:0 0 0 2px #1e2a38}
+
+/* Compact feedback for persistent tools, with drawing choices only when needed. */
+#modeHint{max-width:calc(100% - 20px);border-left:3px solid #8ec9b1;padding:4px 8px;background:#14212ee8;line-height:1.4}
+#modeHint>strong{font-weight:650}#modeHint>span{display:block;font-size:10px}
+#stage[data-mode=erase]{box-shadow:inset 0 0 0 3px #de9b8b;cursor:crosshair}
+#stage[data-mode=select]{box-shadow:inset 0 0 0 2px #8bbde9;cursor:crosshair}
+#stage[data-mode=draw],#stage[data-mode=path]{cursor:crosshair}
+#stage[data-mode=erase] #modeHint{border-left-color:#de9b8b}
+#stage[data-mode=select] #modeHint{border-left-color:#8bbde9}
+#stage.navigating{cursor:grabbing}
+#drawOptions{position:absolute;right:10px;top:10px;z-index:8;display:flex;align-items:center;gap:3px;padding:4px 6px;border:1px solid #73868c;border-radius:9px;background:#152431f2;color:#dce6e8}
+#drawOptions[hidden]{display:none}#drawOptions>span{font-size:11px;padding:0 4px}
+#drawOptions button{display:grid;place-items:center;width:44px;height:44px;padding:0;background:transparent;color:#edf4f5;border:2px solid transparent}
+#drawOptions button[aria-pressed=true]{border-color:#edf4f5;background:#405363}
+#drawOptions button>span{width:22px;height:22px;border-radius:50%;background:var(--swatch)}#drawOptions svg{width:24px;height:24px}
+#ink .line-visible:not(.musical-line){stroke:var(--ink-color,#d9e2dc);stroke-width:var(--ink-width,3)}
+#ink .line-visible.selected-line:not(.musical-line){filter:drop-shadow(0 0 3px #fff);stroke-dasharray:7 4}
+@media(max-width:520px){#drawOptions{right:5px;left:5px;justify-content:center;gap:0;padding:3px 0}#drawOptions>span{display:none}#modeHint>span{max-width:290px}}
+#languageSwitch{display:flex;gap:0;flex:none}#languageSwitch button{min-height:44px;padding:6px 9px;font-size:12px;border-radius:0}#languageSwitch button:first-child{border-radius:7px 0 0 7px}#languageSwitch button:last-child{border-radius:0 7px 7px 0;border-left:0}#languageSwitch button[aria-pressed=true]{background:#263646;color:#fff}
+@media(max-width:520px){.head-actions{gap:5px}#languageSwitch button{font-size:11px;padding:6px}.workspace-app>header{flex-wrap:wrap}.head-actions{margin-left:auto}}
+html[lang=en] .mode-tooltip [lang=zh-CN],html[lang=zh-CN] .mode-tooltip [lang=en]{display:none}
+#languageSwitch button{min-width:44px}#languageSwitch button[aria-pressed=true]{box-shadow:inset 0 -3px 0 #8ec9b1}
+.path-button.playing{background:#d2ebd6;border-color:#8fc79b;box-shadow:0 0 0 3px #8fc79b44}
+/* Playback color follows the active path, independently of editing selection. */
+#ink .line-visible.musical-line{stroke:#aebbc7}
+#ink .line-visible.musical-line.selected-line{stroke:#aebbc7;stroke-width:5}
+#ink .line-visible.musical-line.playing-line{stroke:#ffcf72;stroke-width:5;stroke-opacity:1}
+.path-button.selected{outline-color:#c7dddc}
+
+/* Five distinct sound shapes; Alex’s round Bass stays compatible with saved bells. */
+.epiano .symbol{border-radius:6px}.grand .symbol{border-radius:50%}.grand .symbol::after{content:'';position:absolute;inset:27%;border-radius:50%;background:#1e2a38;border:1px solid #fff8}
+#palette .grand .symbol::after{background:#080c10}#paletteViewport.piano-overlay .grand .symbol::after{background:#fafaf6}#paletteViewport.piano-overlay .black-key.grand .symbol::after{background:#2b3640}
+.palette-top{flex-wrap:wrap}.timbres{flex:none}.palette-options{margin-left:auto;gap:10px;flex-wrap:wrap}.palette-filter{display:flex}.palette-filter button{min-width:44px;min-height:44px;font-size:11px;padding:6px 9px;border-radius:0}.palette-filter button:first-child{border-radius:6px 0 0 6px}.palette-filter button:last-child{border-radius:0 6px 6px 0;border-left:0}.palette-filter button[aria-pressed=true]{background:#263646;color:#fff;box-shadow:inset 0 -3px 0 #8ec9b1}
+#paletteViewport:is([data-palette=diatonic],[data-palette=pentatonic]):not(.piano-overlay) #palette{height:68px}#paletteViewport:is([data-palette=diatonic],[data-palette=pentatonic]):not(.piano-overlay) .white-key{top:8px}
+#stage.silent-edit #modeHint{border-left-color:#e7c582}#mute[aria-pressed=true]{background:#6c5230;box-shadow:inset 0 -3px 0 #f2cc8f}
+@media(max-width:520px){.palette-top{gap:2px}.timbres{width:100%;justify-content:space-between;gap:3px}.timbres button{padding:5px 7px;flex:1;white-space:nowrap;font-size:11px}.palette-options{width:100%;gap:2px;justify-content:space-between}.palette-filter button{padding:5px;font-size:10px}.octave-controls{gap:2px}.palette-top .piano-overlay-toggle{font-size:10px}#visibleRange{font-size:10px}}
+
+/* A stable performance surface, including iPhone's element-fullscreen fallback. */
+body.workspace-app{height:100vh;height:100dvh;min-height:0}
+.workspace-app>header{padding-top:max(5px,env(safe-area-inset-top));padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}
+.workspace-app>main{padding-bottom:max(4px,env(safe-area-inset-bottom));padding-left:max(4px,env(safe-area-inset-left));padding-right:max(4px,env(safe-area-inset-right))}
+#canvasView{display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;font-size:12px}
+#paletteToggle[hidden],#viewNavigation[hidden]{display:none}
+#viewNavigation{display:flex;align-items:center;gap:3px}
+#stage{overscroll-behavior:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+#stage[data-mode=play] .bell,#stage[data-mode=strum] .bell{cursor:pointer}
+html.canvas-locked{overflow:hidden;overscroll-behavior:none}
+body.canvas-fullscreen{position:fixed;inset:0;height:var(--canvas-height,100dvh);width:100%;overflow:hidden;overscroll-behavior:none}
+.canvas-fullscreen>header{min-height:0;flex-wrap:nowrap;padding-bottom:4px;gap:0}
+.canvas-fullscreen>header>div:first-child{display:none}
+.canvas-fullscreen .head-actions{width:100%;justify-content:flex-end;gap:5px}
+.canvas-fullscreen #languageSwitch{margin-right:auto}
+.canvas-fullscreen #canvasView{background:#263646;color:#fff;border-color:#263646}
+.canvas-fullscreen #canvasView svg{width:18px;height:18px}
+.canvas-fullscreen #paletteToggle{font-size:12px;padding:6px 9px}
+.canvas-fullscreen .workspace-menu>summary{padding:9px}
+.canvas-fullscreen .workspace-menu>summary>span{display:none}
+.canvas-fullscreen .workspace-panel{top:calc(env(safe-area-inset-top) + 54px);max-height:calc(var(--canvas-height,100dvh) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 66px);right:max(8px,env(safe-area-inset-right))}
+.canvas-fullscreen>main{padding-top:0}
+.canvas-fullscreen .instrument{border-radius:5px}
+.canvas-fullscreen .canvas-tools{flex-wrap:nowrap;gap:4px;padding:3px 4px}
+.canvas-fullscreen .modes{flex:1;min-width:0;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:none;padding:3px}
+.canvas-fullscreen .modes::-webkit-scrollbar{display:none}
+.canvas-fullscreen .modes>button{flex:none}
+.canvas-fullscreen .canvas-tools #draw{margin-left:0}
+.canvas-fullscreen #modeHint{padding:2px 6px;bottom:5px;font-size:10px}
+.canvas-fullscreen #modeHint>span{display:none}
+@media(max-width:400px){.canvas-fullscreen #canvasView{padding:6px;font-size:11px;gap:4px}.canvas-fullscreen #canvasView svg{width:16px}.canvas-fullscreen .head-actions{gap:3px}.canvas-fullscreen #paletteToggle{padding:6px;font-size:11px}}
+@media(max-height:480px){.canvas-fullscreen.show-palette .palette-top{max-height:100px;overflow-y:auto}.canvas-fullscreen.show-palette #paletteViewport:not(.piano-overlay) #palette{height:84px}.canvas-fullscreen.show-palette #paletteViewport:not(.piano-overlay) .white-key{top:28px}.canvas-fullscreen.show-palette #paletteViewport:not(.piano-overlay) .black-key{top:0}.canvas-fullscreen.show-palette #paletteViewport:is([data-palette=diatonic],[data-palette=pentatonic]):not(.piano-overlay) #palette{height:60px}.canvas-fullscreen.show-palette #paletteViewport:is([data-palette=diatonic],[data-palette=pentatonic]):not(.piano-overlay) .white-key{top:4px}}
+@media(max-width:740px){.canvas-fullscreen[data-tool=move] .canvas-tools{flex-wrap:wrap}.canvas-fullscreen[data-tool=move] .modes{flex-basis:100%}.canvas-fullscreen[data-tool=move] #viewControls{margin-left:auto}}
+@media(max-width:400px){#drawOptions{flex-wrap:wrap}}
+
+/* The library shares the existing overlay so the canvas keeps its full area. */
+.library-actions{display:flex;gap:6px;margin:12px 0 8px}.library-actions button{flex:1;min-width:0;padding:7px 8px}
+.library-note{font-size:12px;line-height:1.45;color:#53646b;margin:8px 0 16px}
+.landscape-library h2{font-size:13px;margin:8px 0}.landscape-library{margin-bottom:14px}
+#landscapeList{max-height:240px;overflow:auto;overscroll-behavior:contain;display:grid;gap:6px}
+#landscapeList button{width:100%;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;padding:8px 10px;min-height:58px}
+.landscape-name{font-size:13px;overflow-wrap:anywhere;font-weight:650}.landscape-open{grid-column:2;grid-row:1 / 3;align-self:center;font-size:11px;color:#426858}
+#landscapeList small{font-size:10px;color:#61747b}#landscapeList button[aria-current=true]{background:#e4eee7;border-color:#91b09c}
+#libraryState{display:inline-block!important;background:#8d3930;color:#fff;border-radius:4px;padding:1px 4px;font-size:10px}#libraryState[hidden]{display:none!important}
+.canvas-fullscreen #libraryState{position:absolute;right:0;top:-4px;font-size:8px}
+
+/* Touch-first vertical rail. The palette meets the canvas with no toolbar between. */
+body.workspace-app .instrument{display:grid;grid-template-columns:56px minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);gap:0}
+body.workspace-app .palette-top{grid-column:2;grid-row:1;min-width:0}
+body.workspace-app #paletteViewport{grid-column:2;grid-row:2;margin:0;border-radius:0;min-width:0}
+body.workspace-app #stage{grid-column:2;grid-row:3;min-width:0}
+body.workspace-app .canvas-tools{grid-column:1;grid-row:1 / 4;display:flex;flex-direction:column;flex-wrap:nowrap;align-items:center;justify-content:flex-start;gap:3px;padding:5px 4px;min-height:0;overflow-y:auto;overflow-x:hidden;border:0;border-right:1px solid #cbd2d7;scrollbar-width:thin;overscroll-behavior:contain;touch-action:pan-y;background:#e7ece9}
+body.workspace-app .canvas-tools .modes,body.workspace-app .canvas-tools #viewControls{display:flex;flex-direction:column;flex-wrap:nowrap;align-items:center;gap:3px;flex:none;margin:0;padding:0;overflow:visible}
+body.workspace-app .canvas-tools button{flex:0 0 44px;width:44px;height:44px;min-height:44px;margin:0!important}
+body.workspace-app .canvas-tools .mode-tooltip{display:none}
+body.workspace-app[data-handedness=left] .instrument{grid-template-columns:minmax(0,1fr) 56px}
+body.workspace-app[data-handedness=left] .palette-top,body.workspace-app[data-handedness=left] #paletteViewport,body.workspace-app[data-handedness=left] #stage{grid-column:1}
+body.workspace-app[data-handedness=left] .canvas-tools{grid-column:2;border-right:0;border-left:1px solid #cbd2d7}
+#toolHint{position:absolute;z-index:12;left:62px;max-width:180px;pointer-events:none;background:#172f3b;color:#fff;font-size:12px;padding:7px 10px;border-radius:6px;box-shadow:0 3px 9px #0003}
+#toolHint[hidden]{display:none}body[data-handedness=left] #toolHint{left:auto;right:62px}
+body.workspace-app #viewNavigation{position:absolute;top:8px;right:8px;z-index:8;display:flex;gap:3px;align-items:center;padding:3px;background:#e7ece9ed;border:1px solid #cbd2d7;border-radius:8px}
+body.workspace-app #viewNavigation[hidden]{display:none}#viewNavigation button{min-width:44px;min-height:44px;font-size:12px}#viewNavigation #home{padding:6px 8px}
+.handedness{display:flex;align-items:center;gap:9px;min-height:44px;margin:14px 0 6px;cursor:pointer;font-size:12px}.handedness input{width:20px;min-height:20px;height:20px;flex:none;accent-color:#254d4b}
+body.workspace-app .workspace-panel{top:var(--settings-top,68px);max-height:calc(var(--canvas-height,100dvh) - var(--settings-top,68px) - env(safe-area-inset-bottom) - 8px)}
+@media(max-width:520px){body.workspace-app .instrument{grid-template-columns:52px minmax(0,1fr)}body.workspace-app[data-handedness=left] .instrument{grid-template-columns:minmax(0,1fr) 52px}body.workspace-app .canvas-tools{padding:4px 3px}body.workspace-app .palette-options{flex-wrap:wrap;gap:2px 4px}body.workspace-app .timbres{flex-wrap:wrap;justify-content:flex-start}body.workspace-app .timbres button{flex:1 0 auto}#viewNavigation #home{max-width:92px;line-height:1.2}#viewNavigation #zoom{min-width:32px}#toolHint{left:56px}body[data-handedness=left] #toolHint{right:56px}}
+
+/* A shared snapshot is a temporary player; edits begin in an independent copy. */
+body[data-activity-preview="true"] .instrument{grid-template-rows:0 0 minmax(0,1fr)!important}
+body[data-activity-preview="true"] :is(.palette-top,#paletteViewport,#paletteToggle,#workspaceMenu,#record,#path,#mute,#select,#move,#duplicate,#pitchDown,#pitchUp,#erase,#canvasUndo,#draw,#viewNavigation,#empty){display:none!important}
+body[data-activity-preview="true"] .head-actions{margin-left:auto}
+
+.path-button[data-loop="true"]::after{content:'↻';position:absolute;right:-5px;bottom:-5px;display:grid;place-items:center;width:17px;height:17px;border-radius:50%;background:#e5f4eb;color:#245d52;font-size:15px;line-height:1;pointer-events:none}
+
+#suiteShareMount:empty{display:none}
+
+/* Central storage lives inside the existing drawer and never changes canvas geometry. */
+.terrain-cloud{margin:18px 0;border-top:1px solid #c4d0ce;padding-top:14px}.terrain-cloud h2{font-size:1rem;line-height:1.4}.terrain-cloud p{font-size:.8rem;line-height:1.5}.terrain-cloud a{display:inline-block;margin:6px 0}.terrain-cloud button{min-height:44px}.terrain-cloud code{overflow-wrap:anywhere}
+
+/* A diamond distinguishes bowed violin from the existing five instrument shapes. */
+.bowed .symbol{clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+
+/* Contextual drag target: never intercept musical touch or reserve canvas space. */
+#trashTarget{position:absolute;left:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:15;min-width:112px;min-height:92px;padding:10px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;pointer-events:none;border:2px dashed #c59a8f;border-radius:16px;background:#20303bf2;color:#f6e8e1;box-shadow:0 3px 14px #0003;font-size:11px;text-align:center}
+#trashTarget[hidden]{display:none}#trashTarget svg{width:28px;height:28px}#trashTarget strong{font-size:13px}#trashTarget.drop-ready{background:#a84432;border-color:#fff4e9;border-style:solid;color:white}#stage.dragging-to-trash #modeHint{visibility:hidden}body[data-handedness=left] #trashTarget{left:auto;right:12px}

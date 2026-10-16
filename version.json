@@ -1,0 +1,15 @@
+{
+  "release_id": "melodymorph-workshop-0.1.9-gallery-candidate-r2",
+  "build_id": "0.1.9-gallery-candidate-r2-20261016",
+  "tool_id": "melodymorph",
+  "landscape_schema": "melodymorph-study/5",
+  "library_schema": "melodymorph-library/1",
+  "status": "experimental_reconstruction",
+  "sharing": "activity_and_library_clients_ready_services_disabled",
+  "playback_behavior": {
+    "path_crossings": "restart-crossings/v1",
+    "direct_tap": "toggle/v1",
+    "path_loops": "end-in-start-circle/v1"
+  },
+  "contract": "proposed_free_play_2026-10-15"
+}

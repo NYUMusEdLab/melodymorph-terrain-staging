@@ -1,0 +1,19 @@
+Musyng Kite SoundFont — acoustic bass, electric piano, acoustic grand piano, vibraphone, nylon-string acoustic guitar and violin.
+Pre-rendered MIDI.js sample packages published by Benjamin Gleitzman:
+https://github.com/gleitz/midi-js-soundfonts
+Pinned revision: 044fab8e1456bfafc5776e86dfd6bb8697149aef
+Upstream describes Musyng Kite as generated from the SoundFont distributed at SynthFont.com.
+Sample license: Creative Commons Attribution-ShareAlike 3.0 Unported.
+https://creativecommons.org/licenses/by-sa/3.0/
+https://creativecommons.org/licenses/by-sa/3.0/legalcode
+The six sample packages are redistributed unchanged. Their filenames and embedded audio are unchanged.
+Any adapted sample material must retain the applicable ShareAlike terms. No endorsement is implied.
+The repository's MIT license (SOURCE-LICENSE.txt) is separate from this sample-content license.
+The bundled soundfont-player runtime is MIT licensed; see ../vendor/soundfont-player.LICENSE.txt.
+The bass package is an additional instrument from the same pinned library. MusEDLab local references: aQWERTYon uses MusyngKite; teacher-pilot-local explicitly lists the earlier piano/vibraphone/nylon-guitar instrument set.
+Pluck maps to acoustic_guitar_nylon, a prototype choice from the existing set, not a claim about MelodyMorph's original sample.
+Round bells use acoustic_bass at Alex’s request. This is a licensed replacement sound, not Eric Rosenbaum’s original sample. The round-bell timbre retains the internal legacy key piano for saved-landscape compatibility.
+
+Electric Piano uses electric_piano_1; Piano uses acoustic_grand_piano, both unchanged from the same pinned MusyngKite library. These replacement samples do not claim original sound parity.
+
+Bowed uses violin-mp3.js, redistributed unchanged from the same pinned MusyngKite revision under CC BY-SA 3.0. It is a violin replacement sound, not an erhu or an original MelodyMorph sample. Each tap plays a finite bowed note. All six banks support C3–C6.

@@ -1,0 +1,130 @@
+/* Task groups keep musical actions and their labels together on touch screens. */
+body.workspace-app{--tool-rail-width:148px}
+body.workspace-app .instrument{grid-template-columns:var(--tool-rail-width) minmax(0,1fr)}
+body.workspace-app[data-handedness=left] .instrument{grid-template-columns:minmax(0,1fr) var(--tool-rail-width)}
+body.workspace-app .canvas-tools{padding:8px;gap:0;align-items:stretch;overflow:hidden;background:#f0f1eb}
+.rail-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;padding:0 1px}
+.tool-group{margin:0 0 12px}
+.tool-group h2{margin:0 0 5px;padding-left:5px;color:#586e62;font-size:10px;line-height:14px;letter-spacing:.09em;font-weight:650;text-transform:uppercase}
+.tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+body.workspace-app .canvas-tools button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:none;width:100%;height:52px;min-height:44px;min-width:0;padding:4px;border-radius:8px;background:#fdfdf9;color:#405b50;border:1px solid transparent;box-shadow:none;line-height:1}
+.canvas-tools button svg{width:22px;height:22px;flex:none}
+.canvas-tools .tool-label{display:block;font-size:10px;line-height:1.2;font-weight:550;white-space:normal}
+html:not([lang=zh-CN]) :is(.tool-label,.tool-group h2,.pitch-caption)>[lang=zh-CN],html[lang=zh-CN] :is(.tool-label,.tool-group h2,.pitch-caption)>[lang=en]{display:none}
+body.workspace-app .canvas-tools button:hover:not(:disabled){background:#e1e9e2}
+body.workspace-app .canvas-tools :is(.mode-button,#erase,#mute)[aria-pressed=true]{background:#254d45;border-color:#254d45;color:#f4f7ef;box-shadow:none}
+body.workspace-app .canvas-tools #record{color:#96343a}
+body.workspace-app .canvas-tools .record-button.active{background:#96343a;border-color:#96343a;color:white}
+#record .tool-label{font-size:9px;max-width:100%}
+body.workspace-app .canvas-tools button:focus:not(:focus-visible){outline:none}
+body.workspace-app .canvas-tools button:focus-visible{outline:3px solid #3869ba;outline-offset:-3px}
+body.workspace-app .canvas-tools button:disabled{opacity:.42;background:transparent}
+.pitch-caption{grid-column:1/-1;font-size:9px;color:#576c60;padding:4px 2px 0;text-align:center;line-height:1.4}
+body.workspace-app .canvas-tools :is(#mute,#draw){grid-column:1/-1;flex-direction:row;gap:8px;height:44px}
+body.workspace-app .canvas-tools #mute{border-top:1px solid #d3dcd5;margin-top:4px!important}
+body.workspace-app .canvas-tools #draw:not([aria-pressed=true]){background:#d7e9d9;border-color:#a7c7ad;color:#234c38}
+body.workspace-app .canvas-tools #draw:not([aria-pressed=true]):hover{background:#c3dec8}
+body.workspace-app .canvas-tools #erase:not([aria-pressed=true]){background:#f4c6ba;border-color:#cc8b7c;color:#642d25}
+body.workspace-app .canvas-tools #erase:not([aria-pressed=true]):hover{background:#edb3a4}
+body.workspace-app .canvas-tools #erase[aria-pressed=true]{background:#913e36;border-color:#913e36;color:#fff;box-shadow:none}
+.canvas-tools :is(#mute,#draw) .tool-label{font-size:11px}
+.rail-recover{flex:none;border-top:1px solid #d3dcd5;padding-top:8px;margin-top:5px}
+.rail-recover .tool-group{margin:0}
+.rail-recover .tool-grid{grid-template-columns:1fr}
+body.workspace-app .canvas-tools #canvasUndo{flex-direction:row;width:100%;height:44px;gap:10px;font-size:13px}
+.canvas-tools #canvasUndo::before{content:none}
+#canvasUndo .tool-label{font-size:12px}
+.undo-glyph{font-size:25px;line-height:1}
+#toolHint{left:calc(var(--tool-rail-width) + 6px)}
+body[data-handedness=left] #toolHint{left:auto;right:calc(var(--tool-rail-width) + 6px)}
+body.workspace-app #modeHint{display:flex;flex-direction:column;gap:3px;left:12px;bottom:12px;max-width:calc(100% - 24px);padding:7px 10px;background:#162532ee;border:1px solid #50656f;border-radius:8px;pointer-events:none}
+body.workspace-app #modeHint>strong{font-size:11px;color:#e4eee9}
+body.workspace-app #modeHint>span{display:block;font-size:11px;color:#c0cfd3}
+body.workspace-app #stage[data-mode=erase] #modeHint{border-color:#de9b8b}
+body.workspace-app #stage.silent-edit #modeHint{border-color:#e7c582}
+body.workspace-app .palette-top{padding:6px 12px;gap:6px;background:#fdfdf9}
+.timbres button{min-height:44px;font-size:11px;padding:5px 9px}
+.timbres button[aria-pressed=true]{background:#e4ece4;color:#254d45;border:1px solid #9caf9f}
+.timbres button{border:1px solid transparent}
+.palette-filter button[aria-pressed=true]{background:#e4ece4;color:#254d45;border-color:#9caf9f;box-shadow:none}
+
+/* Help is opt-in and does not replace, reset, or change the current landscape. */
+#helpStart{display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:8px 12px;color:#254d45;background:#eef3ed;border:1px solid #baccc3;font-size:12px;white-space:nowrap}
+#helpStart>span:first-child{display:grid;place-items:center;width:20px;height:20px;border:1px solid currentColor;border-radius:50%;font-weight:650}
+#helpStart[aria-expanded=true]{background:#254d45;color:#fff;border-color:#254d45}
+.workspace-menu>summary{position:relative}
+#libraryState{position:absolute;right:4px;top:-7px;pointer-events:none}
+.color-settings{border:0;border-top:1px solid #cad4ce;margin:16px 0 0;padding:12px 0 0}
+.color-settings legend{font-size:13px;font-weight:650;color:#29494f;padding:0 5px 0 0}
+.color-settings>div{display:flex;gap:6px;flex-wrap:wrap}
+.color-settings button{flex:1;min-width:100px;min-height:44px;font-size:12px}
+.color-settings button[aria-pressed=true]{background:#254d45;border-color:#254d45;color:#fff}
+.color-settings p{font-size:11px;color:#53646b;margin-bottom:0}
+#startGuide{position:absolute;z-index:10;right:14px;bottom:14px;width:min(300px,calc(100% - 24px));max-height:calc(100% - 24px);overflow:auto;overscroll-behavior:contain;touch-action:pan-y;padding:13px 16px;border:1px solid #b4c9bd;border-radius:13px;background:#fbfbf4;color:#29453d;box-shadow:0 6px 22px #09161c25;user-select:text;-webkit-user-select:text;cursor:default}
+#startGuide[hidden]{display:none}
+#startGuide[data-corner^=top]{top:12px;bottom:auto}
+#startGuide[data-corner$=left]{left:12px;right:auto}
+.guide-top{display:flex;align-items:center;justify-content:space-between;gap:5px}
+.guide-top>div{display:flex;flex:none}
+#guideProgress{font-size:10px;font-weight:650;line-height:1.4;color:#506e5e}
+.guide-top button{width:44px;height:44px;min-width:44px;min-height:44px;border:0;background:transparent;padding:9px;color:#526e61}
+#exitGuide{font-size:26px;line-height:1;padding:0}
+#moveGuide svg{width:20px;height:20px;pointer-events:none}
+#guideTitle{font-size:20px;margin:7px 0 8px;line-height:1.2;letter-spacing:-.02em}
+#guideTitle:focus-visible{outline:2px solid #3869ba;outline-offset:3px}
+#guideInstruction{font-size:13px;line-height:1.5;margin:0 0 12px;color:#435e50}
+.guide-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.guide-bottom button{min-height:44px;font-size:12px;border-radius:8px;padding:8px 14px}
+#skipGuide{background:transparent;border:0;color:#45624f;padding-left:0}
+#nextGuide{background:#254d45;border-color:#254d45;color:#fff;min-width:78px}
+.guide-note{font-size:10px;color:#596c60;margin:10px 0 0}
+body[data-guide-open=true] .record-bar.recording{top:8px;bottom:auto}
+
+/* Reuse the same controls in full screen and with the rail on either side. */
+@media(max-width:1050px){body.workspace-app .palette-options{margin-left:0}#startGuide{width:min(280px,calc(100% - 24px))}.head-actions{gap:6px}}
+@media(max-width:650px){
+ body.workspace-app{--tool-rail-width:68px}
+ body.workspace-app .canvas-tools{padding:5px}
+ .tool-grid{grid-template-columns:1fr;gap:3px}
+ body.workspace-app .canvas-tools button{height:48px}
+ .canvas-tools button svg{width:20px;height:20px}
+ .canvas-tools .tool-label{font-size:9px;line-height:1.15}
+ .tool-group{margin-bottom:10px}
+ .tool-group h2{font-size:9px;padding:0;text-align:center;letter-spacing:0}
+ .pitch-caption{display:none}
+ body.workspace-app .canvas-tools :is(#mute,#draw){flex-direction:column;gap:3px;height:48px}
+ .canvas-tools :is(#mute,#draw) .tool-label{font-size:9px}
+ #canvasUndo .tool-label{font-size:9px}.undo-glyph{font-size:21px}
+ body.workspace-app .canvas-tools #canvasUndo{gap:3px}
+ #helpStart{font-size:11px;padding:7px 8px;gap:4px}
+ #helpStart>span:first-child{display:none}
+ body.workspace-app>header{flex-wrap:wrap;gap:4px}
+ .head-actions{gap:5px;flex-wrap:wrap;justify-content:flex-end;margin-left:auto}
+ #canvasView{font-size:0;width:44px;gap:0}#canvasView svg{width:20px;height:20px}
+ body.workspace-app .palette-top{padding:4px 7px}
+ .timbres{gap:3px}.timbres button{font-size:10px;padding:4px 6px}
+ body.workspace-app .palette-options{gap:4px}
+ .palette-filter button{font-size:10px;padding:4px 6px}
+ .octave-controls{width:100%;justify-content:space-between}
+ #startGuide{padding:8px 12px;width:calc(100% - 20px);right:10px;bottom:10px;max-height:calc(100% - 20px)}
+ #startGuide[data-corner^=top]{top:10px}#startGuide[data-corner$=left]{left:10px}
+ #guideTitle{font-size:18px;margin:5px 0}#guideInstruction{font-size:12px;line-height:1.4;margin-bottom:6px}.guide-note{display:none}
+ body.workspace-app #modeHint{left:8px;bottom:8px;padding:5px 7px;max-width:calc(100% - 16px)}
+ body.workspace-app #modeHint>span{font-size:10px}
+}
+@media(max-height:520px){body.workspace-app{--tool-rail-width:68px}.tool-grid{grid-template-columns:1fr}.pitch-caption{display:none}}
+@media(forced-colors:active){body.workspace-app .canvas-tools button[aria-pressed=true]{border:2px solid Highlight}body.workspace-app .canvas-tools button:focus-visible{outline:3px solid Highlight;outline-offset:-5px}}
+/* Anonymous activity playback retains its deliberately smaller tool set. */
+body.workspace-app[data-activity-preview=true]{--tool-rail-width:68px}
+body[data-activity-preview=true] :is(#helpStart,#startGuide,.tool-group[aria-labelledby=toolsCreate],.tool-group[aria-labelledby=toolsEdit],.rail-recover){display:none!important}
+body[data-activity-preview=true] .tool-grid{grid-template-columns:1fr}
+/* Keep the fullscreen tray reachable without scrolling above the canvas. */
+body.canvas-fullscreen #paletteToggle{flex:none;min-width:68px;min-height:44px;white-space:nowrap}
+body.canvas-fullscreen #helpStart{width:44px;min-width:44px;padding:0;font-size:0;gap:0}
+body.canvas-fullscreen #helpStart>span:first-child{font-size:16px}
+body.canvas-fullscreen #canvasViewLabel{max-width:140px}
+@media(max-width:650px){
+ body.canvas-fullscreen .head-actions{gap:3px;flex-wrap:wrap}
+ body.canvas-fullscreen #paletteToggle{font-size:11px;padding:4px;min-width:62px}
+ body.canvas-fullscreen #languageSwitch button{padding:6px;font-size:11px}
+}
